@@ -1,2 +1,360 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+  import leraEvil from '@/assets/images/photo_2023-09-11_11-43-27-removebg-preview.png';
+  import leraKind from '@/assets/images/photo_2023-10-09_22-00-46.jpg';
+  import ragnarok from '@/assets/images/photo_2023-10-09_22-01-46.jpg';
+  import KickButton from '@/Components/Buttons/KickButton.svelte';
+  import putler from '@/assets/images/putler.jpg';
+  import ainur from '@/assets/images/ainur.jpg';
+  import moksis from '@/assets/images/moksis.jpg';
+  import olga from '@/assets/images/olga.jpg';
+  import veret from '@/assets/images/veret.jpg';
+  import natali from '@/assets/images/natali.jpg'
+  import { slide } from 'svelte/transition';
+  import { isModalOpened, isBirthDayScreenActive } from '@/stores/stores';
+  import light from '@/assets/audio/light.mp3';
+  import medium from '@/assets/audio/medium.mp3';
+  import powerful from '@/assets/audio/powerful.mp3';
+  import { afterUpdate, onMount } from 'svelte';
+  import Congrats from '@/Components/Congrats.svelte';
+  import Modal from '@/Components/Modal.svelte';
+  import rip from '@/assets/images/rip.jpg';
+
+  $: currentKicking = '';
+  $: currentKicker = '';
+  $: currentSound = '';
+  $: animationClicked = false;
+
+  $: kickingMessage = 'Оберіть жертву';
+  $: kickerMessage = 'Оберіть настрій';
+
+  $: counterKicks = 0;
+
+  let animationElement;
+
+  function delay() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 100);
+    });
+  };
+
+  const handleKick = async() => {
+    const button = document.getElementById('kick_button');
+    button.style.pointerEvents = 'none';
+    animationElement.style.pointerEvents = 'none';
+    counterKicks += 1;
+    const audio = new Audio(currentSound);
+    animationClicked = true;
+
+    await delay();
+
+    audio.play();
+
+    await delay();
+    animationClicked = false;
+    button.style.pointerEvents = 'auto';
+    animationElement.style.pointerEvents = 'auto';
+  };
+
+  onMount(() => {
+    $isModalOpened = true;
+  });
+
+  afterUpdate(() => {
+    if (counterKicks >= 25) {
+      currentKicking = rip;
+      kickingMessage = 'СМЕРТЬ!'
+    }
+  })
+</script>
+
+{#if $isModalOpened}
+  <Modal />
+{/if}
+
+{#if $isBirthDayScreenActive}
+  <Congrats />
+{/if}
+
+
+<main class="main">
+  <section class="section">
+    <article class="action">
+      <div class="action__kicking_person">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {kickingMessage}
+          </button>
+
+          <ul class="dropdown-menu">
+            <li>
+              <button on:click={(event) => {
+                currentKicking = olga;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                Оля Ступа
+              </button>
+            </li>
+
+            <li>
+              <button on:click={(event) => {
+                currentKicking = moksis;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                Моксис
+              </button>
+            </li>
+
+            <li>
+              <button on:click={(event) => {
+                currentKicking = veret;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                Веретельник
+              </button>
+            </li>
+
+            <li>
+              <button on:click={(event) => {
+                currentKicking = putler;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                пуйло
+              </button>
+              </li>
+            <li>
+              <button on:click={(event) => {
+                currentKicking = ainur;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                Айнур
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        {#if currentKicking}
+        <div class="action__kicking_person__image_wrapper">
+          <img transition:slide class="action__kicking_person__img" src={currentKicking} alt="">
+        </div>
+        {/if}
+      </div>
+
+      <div class="action__animation">
+        <div class="selection__empty_block">
+          <KickButton clickFunc={handleKick} />
+        </div>
+
+        <svg
+        bind:this={animationElement}
+        class="action__animation__leg"
+        class:animation={animationClicked}
+        id="eeYnZ2I8kER1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><defs><radialGradient id="eeYnZ2I8kER2-fill" cx="0" cy="0" r="0.5" spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0.5 0.5)"><stop id="eeYnZ2I8kER2-fill-0" offset="0%" stop-color="#9f1414"/><stop id="eeYnZ2I8kER2-fill-1" offset="100%" stop-color="#fff"/></radialGradient><radialGradient id="eeYnZ2I8kER3-fill" cx="0" cy="0" r="0.5" spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0.5 0.5)"><stop id="eeYnZ2I8kER3-fill-0" offset="0%" stop-color="#9f1414"/><stop id="eeYnZ2I8kER3-fill-1" offset="100%" stop-color="#fff"/></radialGradient><radialGradient id="eeYnZ2I8kER4-fill" cx="0" cy="0" r="0.5" spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0.5 0.5)"><stop id="eeYnZ2I8kER4-fill-0" offset="0%" stop-color="#371d1d"/><stop id="eeYnZ2I8kER4-fill-1" offset="100%" stop-color="#fff"/></radialGradient><linearGradient id="eeYnZ2I8kER7-fill" x1="0" y1="0.5" x2="1" y2="0.5" spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)"><stop id="eeYnZ2I8kER7-fill-0" offset="41%" stop-color="#30883d"/><stop id="eeYnZ2I8kER7-fill-1" offset="94%" stop-color="#ff02db"/></linearGradient></defs><path d="M100.962806,63.758908c8.785721,8.23376-3.787795-23.143502,5.522715,25.616144s10.587324,42.443505,11.226196,51.33991q.638872,8.896405-7.877677,11.300729" transform="translate(.000005 0.000004)" fill="url(#eeYnZ2I8kER2-fill)" fill-opacity="0.01" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M134.306968,149.999996c-.5651-9.620897-1.541291-27.974911-1.952383-38.170331c1.362999-15.456789,5.583421-37.3477-3.416669-42.464319L124.05696,64.48439c13.426873,2.369448,52.128493-29.168041,64.428621-43.44051" transform="translate(.000005 0.000004)" fill="url(#eeYnZ2I8kER3-fill)" fill-opacity="0.01" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M102.092662,63.40388c9.088805-26.476497,37.597112-60.956261,48.004872-63.78638" fill="url(#eeYnZ2I8kER4-fill)" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="" fill="#090b12" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M137.465856,142.783688q-25.271172,19.723841-25.476629,19.929298l2.054566,1.84911l25.271171-19.518385c.256252-1.697212-1.69106-1.327569-1.849108-2.260023Z" transform="translate(.000003 0.000001)" fill="#030409" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M104.18187,146.276447c7.474907,11.791439,27.431682,14.358431,39.447686,12.121949c4.748074,2.40818,5.003368,10.849049,4.725503,16.847447-10.301094,9.707505-24.471114,2.743099-38.622562.429601-6.961096,7.04247-27.262043,9.76223-37.601868,6.966839-4.176712-5.141147-5.80358-6.665314.616368-16.025624c11.895995-1.942369,14.511509-11.432329,31.434873-20.340212Z" transform="translate(.000004 0.000004)" fill="url(#eeYnZ2I8kER7-fill)" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="" fill="#040202" stroke="#3f5787" stroke-width="0.6"/><path d="M147.73869,172.574907c-.90007,3.61496-13.498701,3.074027-38.009486-.821827-13.687509,4.257853-33.44118,10.683515-40.064053,6.574613" transform="matrix(1 0 0 1.276289 0.000001-48.361731)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M81.54529,167.706898c-3.132464,4.110163,4.186388,5.248549,2.74258.000002-.479745-1.743974-6.45305,1.57485-2.21516,3.27" transform="translate(-4.724805 1.31855)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M82.62025,173.44148c-1.20101,3.00253,5.0196,4.94386,5.68647.60926.3548-2.30617-6.49882-4.08368-6.49882-.40618c0,7.79738,12.53013-1.21853,4.1633-1.21853" transform="translate(0 0.000001)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M85.05731,164.40406c-5.28829,1.76276,3.52705,5.60163,4.67102,2.74169.98951-2.47376-4.19652-3.77819-5.48338-2.23397" transform="translate(.000001 0)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M91.86076,167.85656c-5.59855,5.59855,10.47289,3.97869,7.10808-.50772-1.35278-1.8037-6.66053-1.16965-7.41271.71081" transform="translate(0 0.000001)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M93.79009,157.60062c-6.41155,5.12924,7.77422,5.68974,4.77257-.9139-1.08008-2.37617-5.06891.91058-6.09264,1.32007" transform="translate(.000001 0)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M101.30435,160.54539c-7.49547,1.07078,2.56568,10.07089,4.46794,1.82779.71147-3.08302-5.4349-2.16243-7.10808-1.82779" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/><path d="M134.503936,149.111968c.328794,3.915634.810163,9.772554,2.081341,9.756287" transform="translate(.000001 0.000001)" fill="#fafafa" stroke="#060c17" stroke-width="0.6" stroke-linecap="square"/></svg>
+      </div>
+
+      <div class="action__kicker">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {kickerMessage}
+          </button>
+
+          <ul class="dropdown-menu">
+            <li>
+              <button
+                on:click={(event) => {
+                  currentKicker = leraKind;
+                  currentSound = light;
+                  kickerMessage = event.currentTarget.innerText;
+                }}
+                class="dropdown-item"
+              >
+                Добра
+              </button>
+            </li>
+
+            <li>
+              <button
+                on:click={(event) => {
+                  currentKicker = leraEvil;
+                  currentSound = medium;
+                  kickerMessage = event.currentTarget.innerText;
+                }}
+                class="dropdown-item"
+              >
+                Зла
+              </button>
+            </li>
+
+            <li>
+              <button
+                on:click={(event) => {
+                  currentKicker = ragnarok;
+                  currentSound = powerful;
+                  kickerMessage = event.currentTarget.innerText;
+                }}
+                class="dropdown-item"
+              >
+                Вам всім буде жіпа
+              </button>
+            </li>
+
+            <li>
+              <button
+                on:click={(event) => {
+                  currentKicker = natali;
+                  currentSound = powerful;
+                  kickerMessage = event.currentTarget.innerText;
+                }}
+                class="dropdown-item"
+              >
+                Мат
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        {#if currentKicker}
+        <div class="action__kicker__wrapper">
+          <img transition:slide class="action__kicker__img" src={currentKicker} alt="">
+        </div>
+        {/if}
+      </div>
+    </article>
+  </section>
+</main>
+
+<style lang="scss" scoped>
+  @import '@/assets/styles/mixins';
+
+  .main {
+    padding: 0 10px;
+
+    .section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 50px;
+
+      .action {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+
+        @include mobile {
+          flex-wrap: wrap;
+        }
+
+        &__kicking_person {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 33%;
+          gap: 20px;
+
+          @include mobile {
+            width: 50%;
+            order: 2;
+          }
+
+          &__image_wrapper {
+            display: flex;
+            height: 200px;
+            border-radius: 30px;
+            overflow: hidden;
+            align-self: center;
+          }
+
+          &__img {
+            overflow: hidden;
+            width: 100%;
+            max-width: 200px;
+            vertical-align: middle;
+          }
+        }
+
+        &__animation {
+          position: relative;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          align-self: start;
+          width: 33%;
+          gap: 20px;
+
+          @include mobile {
+            width: 50%;
+            order: 3;
+          }
+
+          &__leg {
+            transform: rotateZ(0deg) translateY(50px);
+            transform-origin: top;
+          }
+
+          .animation {
+            animation: kick .2s linear 1 alternate;
+          }
+        }
+
+        &__kicker {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 33%;
+          gap: 20px;
+
+          @include mobile {
+            width: 100%;
+            order: 1;
+            margin-bottom: 30px;
+          }
+
+          &__wrapper {
+            display: flex;
+            height: 200px;
+            border-radius: 30px;
+            overflow: hidden;
+            align-self: center;
+          }
+
+          &__img {
+            overflow: hidden;
+            width: 100%;
+            max-width: 200px;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes kick {
+    0% {
+      transform: rotate(0deg) translateY(50px);
+    }
+
+    50% {
+      transform: rotate(70deg) translateY(50px);
+    }
+
+    100% {
+      transform: rotate(0deg) translateY(50px);
+    }
+  }
+</style>
+
