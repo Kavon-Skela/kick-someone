@@ -15,7 +15,7 @@
 
       const currentMonth = now.getMonth();
       const currentDay = now.getDate();
-
+      
       if (currentMonth === 9 && currentDay === 14 && $isItLerok) {
         $isBirthDayScreenActive = true;
       }

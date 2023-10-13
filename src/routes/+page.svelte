@@ -18,6 +18,8 @@
   import Congrats from '@/Components/Congrats.svelte';
   import Modal from '@/Components/Modal.svelte';
   import rip from '@/assets/images/rip.jpg';
+  import kadri from '@/assets/images/kadri.jpg';
+  import ambrosia from '@/assets/images/padla.jpg';
 
   $: currentKicking = '';
   $: currentKicker = '';
@@ -40,6 +42,10 @@
   };
 
   const handleKick = async() => {
+    if (!currentKicker) {
+      return;
+    }
+
     const button = document.getElementById('kick_button');
     button.style.pointerEvents = 'none';
     animationElement.style.pointerEvents = 'none';
@@ -144,6 +150,28 @@
                 class="dropdown-item"
               >
                 Айнур
+              </button>
+            </li>
+            <li>
+              <button on:click={(event) => {
+                currentKicking = ambrosia;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                Падла
+              </button>
+            </li>
+            <li>
+              <button on:click={(event) => {
+                currentKicking = kadri;
+                kickingMessage = event.currentTarget.innerText;
+                counterKicks = 0;
+                }}
+                class="dropdown-item"
+              >
+                Відділ кадрів
               </button>
             </li>
           </ul>
